@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ConLister.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		d:DesignWidth="500" d:DesignHeight="450"
+		MinHeight="450" MaxHeight="450"
+		MinWidth="500" MaxWidth="500"
+        x:Class="ConLister.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ConLister">
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<StackPanel Margin="2">
+		<TextBlock FontSize="10">ConLister v1.0</TextBlock>
+		<ComboBox x:Name="AvailableCaptureDevices"
+				  Margin="0,5"
+				  HorizontalAlignment="Stretch"
+				  SelectedIndex="{Binding SelectedCaptureDevice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+			<!-- Added in MainWindow.axaml.cs, initializeApp() -->
+		</ComboBox>
+		<Button Click="click_StartStopListening" HorizontalAlignment="Stretch">
+			<TextBlock HorizontalAlignment="Center" Text="{Binding CaptureButtonText}"></TextBlock>
+		</Button>
+		<TextBlock Text="{Binding ErrorMessage}"
+				   Foreground="Red">
+		</TextBlock>
+		<ScrollViewer VerticalScrollBarVisibility="Auto"
+					  HorizontalScrollBarVisibility="Auto"
+					  VerticalAlignment="Stretch"
+					  Height="313">
+			<StackPanel x:Name="Connections" Orientation="Vertical">
+				<SelectableTextBlock Text="{Binding ConnectionLogFormatted}"></SelectableTextBlock>
+			</StackPanel>
+		</ScrollViewer>
+		<DockPanel Margin="0,2" HorizontalAlignment="Right">
+			<Button FontSize="13" Click="click_CopyAllIPPort" Margin="3,0">Copy All IP:Port</Button>
+			<Button FontSize="13" Click="click_CopyIPPort" Margin="3,0">Copy Dest IP:Port</Button>
+			<Button FontSize="13" Click="click_CopyIPOnly" Margin="3,0">Copy Dest IP Only</Button>
+		</DockPanel>
+	</StackPanel>
+</Window>
